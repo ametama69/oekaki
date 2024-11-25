@@ -1,0 +1,223 @@
+:root {
+    --background-color: #e0e0e0; 
+    --text-color: #333; 
+    --border-color: #ccc; 
+    --button-bg: #eee; 
+    --button-bg-hover: #ccc; 
+
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #1f1f1f; 
+        --text-color: #ccc; 
+        --border-color: #444; 
+        --button-bg: #333; 
+        --button-bg-hover: #666; 
+    }
+}
+
+.light-mode{
+    --background-color: #e0e0e0; 
+    --text-color: #333; 
+    --border-color: #ccc; 
+    --button-bg: #eee; 
+    --button-bg-hover: #ccc; 
+}
+
+.dark-mode{
+    --background-color: #1f1f1f; 
+    --text-color: #ccc; 
+    --border-color: #444; 
+    --button-bg: #333; 
+}
+
+@media (max-width: 800px) {
+    #app , .output-tool{
+        transform: scale(0.8); 
+        transform-origin: top center; 
+    }
+    .output-container {
+        max-width: 90% !important;
+    }
+    .container:has(.output-container) {
+        transform: translateY(-100px);
+      }
+      
+}
+
+@media (max-width: 600px) {
+    #app , .output-tool{
+        transform: scale(0.6); 
+        transform-origin: top center; 
+
+    }
+    .output-container {
+        max-width: 90% !important;
+    }
+    .container:has(.output-container) {
+        transform: translateY(-250px); 
+      }
+      
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color); 
+    color: var(--text-color); 
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    height: auto;
+    box-sizing: border-box; 
+}
+
+.toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.palette {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.color-btn {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.tool-btn {
+    width: 40px;
+    height: 40px;
+    margin: 1px;
+    cursor: pointer;
+    background-color: var(--button-bg);
+    border: #666 solid 1px; 
+    border-radius: 8px; 
+    font-size: 28px;
+    color: var(--text-color); 
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+}
+
+.tool-btn:hover, .tool-btn:focus {
+    background-color: var(--button-bg-hover); 
+    color: var(--text-color); 
+}
+
+
+
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    border: #ccc 10px solid;
+    align-items: center;     
+}
+
+.canvas-container canvas {
+    max-width: 100%; 
+    height: auto; 
+}
+
+
+
+
+.output-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px;
+    max-width: 60%;
+}
+.output-tool{
+    width: 50px;
+}
+
+
+.modal {
+    position: absolute;
+    z-index: 1;
+    left: -50vw;
+    top: 0;
+    width: 200vw; /* とりあえずキャンバスに触れなくできれば… */
+    height: 100vh; 
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.modal-content {
+    background-color: var(--background-color); 
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: left;
+    color: var(--text-color); 
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--text-color); 
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.inputRange {
+    appearance: none;
+    width: 8px;
+    height: 100px;
+    border: 1px solid var(--text-color); 
+    border-radius: 9999px;
+    background: #444; 
+    writing-mode: vertical-rl;
+    direction: rtl;
+    cursor: pointer;
+}
+  
+/* ツマミ：Chrome, Safari, Edge用 */
+.inputRange::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    background: #06b6d4; 
+    box-shadow: none;
+}
+  
+
+.inputRange::-moz-range-thumb {
+    border: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    background: #06b6d4; 
+    box-shadow: none;
+}
+
+.textlink{
+    color: var(--text-color); 
+}
+

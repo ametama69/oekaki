@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doodle Seed - Nirano Ohitashi</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js" integrity="sha512-CeIsOAsgJnmevfCi2C7Zsyy6bQKi43utIjdA87Q0ZY84oDqnI0uwfM9+bKiIkI75lUeI00WG/+uJzOmuHlesMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Phosphor Icons https://phosphoricons.com/ MIT License-->
+
+
+	<link rel="icon" type="image/png" href="https://ametama69.github.io/favicon/favicon-48x48.png" sizes="48x48" />
+	<link rel="icon" type="image/svg+xml" href="https://ametama69.github.io/favicon/favicon.svg" />
+	<link rel="shortcut icon" href="https://ametama69.github.io/favicon/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="https://ametama69.github.io/favicon/apple-touch-icon.png" />
+	<meta name="apple-mobile-web-app-title" content="Nirano Ohitashi" />
+	<link rel="manifest" href="https://ametama69.github.io/favicon/site.webmanifest" />
+
+
+	<meta property="og:site_name" content="Nirano Ohitashi">
+	<meta property="og:title" content="Doodle Seed">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://ametama69.github.io/oekaki/">
+	<meta property="og:image" content="https://ametama69.github.io/assets/images/oglogo.png">
+	<meta property="og:description" content="ランダム図形が表示されるらくがきアプリ">
+	<meta property="og:locale" content="ja_JP">
+	<meta name="twitter:card" content="summary">
+	
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-97W65RKGPY"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-97W65RKGPY');
+	</script>
+
+
+
+
+
+</head>
+<body>
+  <div class="container" id="app">
+    <!-- キャンバス -->
+    <div class="canvas-container" >
+      <canvas id="canvas" width="480" height="640"></canvas>
+    </div>
+    <!-- ツールバー -->
+    <div class="toolbar">
+      <br>
+      <button class="color-btn" :style="{ backgroundColor: colorPalettes[currentPalette][0] }" @click="brushColor = colorPalettes[currentPalette][0]"></button>
+      <button class="color-btn" :style="{ backgroundColor: colorPalettes[currentPalette][1] }" @click="brushColor = colorPalettes[currentPalette][1]"></button>
+      <button class="color-btn" :style="{ backgroundColor: colorPalettes[currentPalette][2] }" @click="brushColor = colorPalettes[currentPalette][2]"></button>
+      <button class="color-btn" :style="{ backgroundColor: colorPalettes[currentPalette][3] }" @click="brushColor = colorPalettes[currentPalette][3]"></button>
+      <br>
+
+      <button class="tool-btn" id="brush-btn" @click="isEraserMode = false"><i class="ph ph-pen"></i></button>
+      <button class="tool-btn" id="eraser-btn" @click="isEraserMode = true"><i class="ph ph-eraser"></i></button>
+
+
+      <!-- <input type="range" name="brush-size" v-model="brushSize" min="1" max="50" orient="vertical" id="inputRange" class="inputRange" @input="updateBrush()"/>
+      <p>{{ brushSize }}</p> -->
+
+      <button class="tool-btn" id="undo-btn"><i class="ph ph-arrow-counter-clockwise" @click="clearDraw()"></i></button>
+      <button class="tool-btn" id="clear-btn" @click="clearCanvas()"><i class="ph ph-trash"></i></button>
+      <button class="tool-btn" id="output-btn" @click="outputImage()"><i class="ph ph-check-fat"></i></button>
+      <button class="tool-btn" id="settings-btn" @click="openSettingsModal()"><i class="ph ph-gear-six"></i></button>
+      <button class="tool-btn" id="toggle-mode-btn" @click="toggleDarkMode()"><i class="ph ph-lamp"></i></button>
+      <a style="text-decoration: none;" class="tool-btn" id="readme-btn" href="readme.html" target="_blank"><i class="ph ph-question"></i></a>
+
+      
+
+      <!-- 設定画面モーダル -->
+      <div id="settings-modal" v-if="isSettingsModalOpen" class="modal" @click="closeSettingsModal()">
+        <div class="modal-content" @click.stop>
+          <span class="close" @click="closeSettingsModal()">&times;</span>
+          <h2>設定</h2>
+          <label for="canvasSize">キャンバスサイズ:</label>
+          <select id="canvasSize" v-model="currentCanvasSize" @change="changeCanvasSize">
+            <option value="s480x640">480x640</option>
+            <option value="s512x512">512x512</option>
+            <option value="s640x480">640x480</option>
+          </select><br>
+          <label for="colorPalette">パレットのカラーセット:</label>
+          <select id="colorPalette" v-model="currentPalette" >
+            <option value="Sky">Sky</option>
+            <option value="Forest">Forest</option>
+            <option value="Marine">Marine</option>
+            <option value="Mono">Mono</option>
+          </select><br>
+          <label for="markerShapes">マーカー図形セット:</label>
+          <select id="markerShapes" v-model="currentMarkerShapes">
+            <option value="○△△">○△△</option>
+            <option value="○△△□□">○△△□□</option>
+            <option value="○△△♡□□">○△△♡□□</option>
+            <option value="○△△♡">○△△♡</option>
+            <option value="○○○">○○○</option>
+            <option value="○○○○">○○○○</option>
+            <option value="○○○○○">○○○○○</option>
+            <option value="○○○○○○">○○○○○○</option>
+            <option value="特盛">特盛</option>
+            <option value="無し">無し</option>
+            <option value="ぐるぐる">ぐるぐる</option>
+          </select><br>
+          <label for="markerColors">マーカー図形のカラーセット:</label>
+          <select id="markerColors" v-model="currentMarkerColors">
+            <option value="Vivid">Vivid</option>
+            <option value="Pale">Pale</option>
+            <option value="Dark">Dark</option>
+            <option value="Mono">Mono</option>
+          </select><br>
+          <label for="outputSize">出力解像度:</label>
+          <input type="range" id="outputSize" v-model="outputSize" min="1" max="10" step="1" @input="updateOutputSize()"/>
+          <span>{{ outputSize }}</span><br>
+        <label for="dialogBeforeUnload">閉じるとき警告:</label>
+        <input type="checkbox" id="dialogBeforeUnload" v-model="dialogBeforeUnload">
+        <br>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="container">
+  <div class="output-container">
+    <!-- 生成された画像のリストをここに表示 -->
+  </div>
+  <div class="output-tool">
+    <button class="tool-btn" id="dl-btn" onclick="allDownload()"><i class="ph ph-download"></i></button>
+    <button class="tool-btn" id="clear-btn" onclick="clearOutput()"> <i class="ph ph-trash"></i></button>
+  </div>
+
+
+  
+  </div>
+  <script src="script.js"></script>
+
+<br>
+  <div class="container">
+    <div id="socialshare" style="display: flex;" data-color="#333,#eee,#ccc,#aaa" data-color2="#ccc,#111,#333,#666" data-text="" data-url="">
+    
+        [["X(Twitter)","https://twitter.com/intent/post?text=","ph ph-x-logo"],
+        ["Threads","https://www.threads.net/intent/post?text=","ph ph-threads-logo"],
+        ["Bluesky","https://bsky.app/intent/compose?text=","ph ph-butterfly"],
+        ["Taittsu","https://taittsuu.com/share?text=","ph ph-pants"],
+        ["fedifile","https://fedifile.net/share?text=","ph ph-fediverse-logo"]]       </div>
+        
+        <script src="../socialshare/socialshare.js"></script>
+
+  </div>
+  <br>
+  <div class="container">
+    <a class="textlink" href="../">Top</a>
+  </div>
+</body>
+</html>

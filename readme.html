@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readme - Doodle Seed - Nirano Ohitashi</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Phosphor Icons https://phosphoricons.com/ MIT License-->
+
+    <meta property="og:site_name" content="Nirano Ohitashi">
+	<meta property="og:title" content="Readme - Doodle Seed">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://ametama69.github.io/oekaki/readme.html">
+	<meta property="og:image" content="https://ametama69.github.io/assets/images/oglogo.png">
+	<meta property="og:description" content="ランダム図形が表示されるらくがきアプリ">
+	<meta property="og:locale" content="ja_JP">
+	<meta name="twitter:card" content="summary">
+
+</head>
+<body>
+    <h1>Doodle Seed</h1>
+    <p>キャンバスにランダムな図形やぐちゃぐちゃの線をうっすら表示し描画の補助とし、イラストの構図案・アイデアを描き出す補助をするアプリケーションです。</p>
+    <p>マーカー図形は○△□♡と曲線のほか、非表示での利用も可能。</p>
+    <p>
+        <a href="index.html">⇒　<b>つかってみる</b>✍️</a>
+    </p>
+
+    <h2>更新履歴</h2>
+    <p>2024-11-26(Tue)　とりあえず公開</p>
+
+
+
+    <h2>つかいかた</h2>
+    <h3>メイン画面</h3>
+    <img src="ui.webp" alt="キャンバス・ツール画面">
+    <ol>
+        <li>キャンバス - ここにマウスやペンで描画</li>
+        <li>パレット - 4色　ペンツールの色を切り替え</li>
+        <li>ペンツール - ペンツールに切り替え</li>
+        <li>消しゴム - 消しゴムツールに切り替え　背面の図形は消えない</li>
+        <li>描画のクリア - 背面の図形を消さずに描画を消去</li>
+        <li>キャンバスクリア - 背面の図形ごと消去して新規作成</li>
+        <li>描画の出力 - キャンバスの内容を下部に出力</li>
+        <li>設定 - 設定画面を開く        </li>
+        <li>ダークモード - ダーク/ライトモードの切り替え</li>
+        <li>ヘルプ - これを開きます</li>
+        <li>出力履歴 - 画像クリックで1枚ずつダウンロード</li>
+        <li>出力履歴一括保存 - 出力済画像を縦横に連結したものをダウンロード</li>
+        <li>出力履歴一括削除 - 出力ログの全削除</li>
+    </ol>
+    <h3>設定画面</h3>
+    <img src="settings.webp" alt="設定画面">
+
+    <ol>
+        <li>キャンバスサイズ - キャンバスサイズを切り替えます</li>
+        <li>パレットのカラーセット - ブラシのカラーパレットを切り替えます</li>
+        <li>マーカー図形セット - 背面の図形セットを切り替えます</li>
+        <li>マーカー図形のカラーセット - 背面の図形の色を切り替えます</li>
+        <li>出力解像度 - 一括保存時のサイズを変更します　デフォルト5</li>
+        <li>閉じる際に確認ダイアログを表示</li>
+    </ol>
+
+
+    <h3>想定される使い方</h3>
+    <p>図形マーカーや別で用意した資料等を元に構図とかポーズのアイデアをひたすら出して、ある程度描けたらダウンロードして他のアプリで描く…という想定です。<br>
+    ○△□♡は頭・手・足・骨盤のイメージ…で作り始めたけど、マーカー非表示で30秒ドローイング的に使うかランダムなベジエ曲線が表示されるぐるぐるが使いやすいかもしれない<br>
+    正確な骨格などが表示されるわけではないので、しっかり描く際はアイデアを元に3Dモデルなど置くといいと思います
+    </p>
+
+    <h2>おやくそく</h2>
+    <p>なにが起きても責任は取りません。パレットなどの設定はブラウザに保存されるけど画像はタブ閉じると消えるとおもうのでバックアップはしっかりね</p>
+
+
+    <h2>ありがと祭り</h2>
+    <h3>発想元</h3>
+    <p><a href="https://medibangpaint.com/use/2023/09/illust-composition-random-line-recommend/">イラストの構図が思いつかない時はランダム線がおすすめ！構図を考えるコツを解説 | MediBang Paint – 無料のイラスト・マンガ制作ツール</a></p>
+
+    <h3>使っているもの</h3>
+    <p><a href="https://ja.vuejs.org">Vue.js - The Progressive JavaScript Framework | Vue.js</a> MIT License</p>
+    <p><a href="http://fabricjs.com">Fabric.js Javascript Canvas Library</a> - <a href="https://github.com/fabricjs/fabric.js?tab=License-1-ov-file#readme">License</a></p>
+    <p><a href="https://phosphoricons.com">Phosphor Icons</a>　<a href="https://github.com/phosphor-icons/homepage?tab=MIT-1-ov-file#readme">MIT License</a></p>
+    <p><a href="https://html2canvas.hertzen.com">html2canvas - Screenshots with JavaScript</a>　MIT License</p>
+    
+    <h2>つくったひと</h2>
+    <p><a href="https://scrapbox.io/ametama69/Ametama69">Ametama69 - やり場のないメモ</a></p>
+<br>
+<h5>Share on</h5>
+<div id="socialshare" style="display: flex;" data-color="#333,#eee,#ccc,#aaa" data-color2="#ccc,#111,#333,#666" data-text="" data-url="">
+
+    [["X(Twitter)","https://twitter.com/intent/post?text=","ph ph-x-logo"],
+    ["Threads","https://www.threads.net/intent/post?text=","ph ph-threads-logo"],
+    ["Bluesky","https://bsky.app/intent/compose?text=","ph ph-butterfly"],
+    ["Taittsu","https://taittsuu.com/share?text=","ph ph-pants"],
+    ["fedifile","https://fedifile.net/share?text=","ph ph-fediverse-logo"]]       </div>
+    
+    <script src="../socialshare/socialshare.js"></script>
+
+    <p>
+        <a href="index.html">Back</a><br>
+        <a href="../">Top</a>
+    </p>
+</body>
+</body>
+</html>
