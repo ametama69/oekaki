@@ -55,7 +55,7 @@ const app = Vue.createApp({
       currentCanvasSize:"s480x640",
       currentPalette:"Marine",
       currentMarkerColors: "Vivid",
-      currentMarkerShapes:"○△△",
+      currentMarkerShapes:"特盛",
       outputSize:5,
       dialogBeforeUnload:true,
 
@@ -188,6 +188,10 @@ const app = Vue.createApp({
           newShape = this.drawHeart(); 
         } else if (shape === '＠') {
           newShape = this.drawScribble();
+        } else if (shape === '★') {
+          newShape = this.drawpolygon();
+        } else if (shape === '☆') {
+          newShape = this.drawpolygon2();
         }
         if (newShape) {
           this.group.addWithUpdate(newShape); // グループに追加
@@ -277,6 +281,75 @@ const app = Vue.createApp({
 
       });
       return heart; // ハートを返す
+    },
+    drawpolygon(){
+      const times = rndInt(3, 8);
+      let pathData = "M"+rndInt(10, this.canvasSize[this.currentCanvasSize][0])+" "+rndInt(10, this.canvasSize[this.currentCanvasSize][1]);
+
+        for (let i = 0; i < times; i++) {
+        pathData = pathData + " L"+rndInt(1, this.canvasSize[this.currentCanvasSize][0])+" "+rndInt(1, this.canvasSize[this.currentCanvasSize][1])+" "+rndInt(1, this.canvasSize[this.currentCanvasSize][0])+" "+rndInt(1, this.canvasSize[this.currentCanvasSize][1])+" "
+      }
+      pathData = pathData+" Z";
+
+      const scale =rndInt(10,20);
+      const polygon = new fabric.Path(pathData, {
+        selectable: false,
+        originX: "center",
+        originY: "center",
+        left: this.canvasSize[this.currentCanvasSize][0] / 2, 
+        top: this.canvasSize[this.currentCanvasSize][1] / 2, 
+        fill: "transparent",
+        stroke: this.markerColors[this.currentMarkerColors][1]+ '80',
+        strokeWidth: 2/scale*10,
+        scaleX: scale/10,
+        scaleY: scale/10
+
+      });
+
+
+
+      return polygon;
+
+    },
+    drawpolygon2() {
+      const times = rndInt(4, 10);
+      const radius = Math.min(this.canvasSize[this.currentCanvasSize][0], this.canvasSize[this.currentCanvasSize][1]) / 3; 
+      const centerX = this.canvasSize[this.currentCanvasSize][0] / 2; 
+      const centerY = this.canvasSize[this.currentCanvasSize][1] / 2; 
+      const points = []; // 座標を格納する配列
+      const angles = Array.from({length: times}, () => rndInt(0, 360))
+      .sort((a, b) => a - b);
+
+      angles.forEach(angle => {
+        const radian = angle * Math.PI / 180;
+        const x = centerX + radius * Math.cos(radian);
+        const y = centerY + radius * Math.sin(radian);
+        points.push(x + " " + y);
+      });
+
+      let pathData = "M " + points[0];
+
+        for (let i = 1; i < times-1; i++) {
+        pathData = pathData + " L "+points[i+1];
+      }
+      pathData = pathData+" Z";
+      // console.log(pathData)
+      const scale =rndInt(10,20);
+      const polygon2 = new fabric.Path(pathData, {
+        selectable: false,
+        originX: "center",
+        originY: "center",
+        left: this.canvasSize[this.currentCanvasSize][0] / 3, 
+        top: this.canvasSize[this.currentCanvasSize][1] / 2, 
+        fill: "transparent",
+        stroke: this.markerColors[this.currentMarkerColors][1]+ '80',
+        strokeWidth: 2/scale*10,
+        scaleX: scale/10,
+        scaleY: scale/10
+
+      });
+
+      return polygon2;
     },
     drawScribble(){
       const times = rndInt(10, 50);
