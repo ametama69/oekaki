@@ -72,7 +72,7 @@ const app = Vue.createApp({
   mounted() {
     // console.log(`コンポーネントがマウントされました。`);
     this.loadSettings(); // ウィンドウが開いたときに設定を読み込む
-
+    // this.changeCanvasSize();
     this.isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches; // ダークモード設定をisDarkModeに代入
 
     this.canvas = new fabric.Canvas('canvas', { 
@@ -80,6 +80,11 @@ const app = Vue.createApp({
       freeDrawingBrush: new fabric.PencilBrush(), 
       backgroundColor : 'white'
     }); 
+    
+    this.canvas.setWidth(this.canvasSize[this.currentCanvasSize][0]);
+    this.canvas.setHeight(this.canvasSize[this.currentCanvasSize][1]);
+
+
     this.pencilBrush = new fabric.PencilBrush(this.canvas);
     this.canvas.freeDrawingBrush = this.pencilBrush; 
     this.updateBrush(); 
@@ -192,6 +197,8 @@ const app = Vue.createApp({
           newShape = this.drawpolygon();
         } else if (shape === '☆') {
           newShape = this.drawpolygon2();
+        } else if (shape === '▽') {
+          newShape = this.drawTriangleUpsidedown();
         }
         if (newShape) {
           this.group.addWithUpdate(newShape); // グループに追加
@@ -351,6 +358,37 @@ const app = Vue.createApp({
 
       return polygon2;
     },
+    drawTriangleUpsidedown() {
+          // 上半分の2点を取得
+          const point1X = rndInt(0, this.canvasSize[this.currentCanvasSize][0]);
+          const point1Y = rndInt(0, this.canvasSize[this.currentCanvasSize][1] / 2);
+          const point2X = rndInt(0, this.canvasSize[this.currentCanvasSize][0]);
+          const point2Y = rndInt(0, this.canvasSize[this.currentCanvasSize][1] / 2);
+          
+          // 下半分の1点を取得
+          const point3X = rndInt(0, this.canvasSize[this.currentCanvasSize][0]);
+          const point3Y = rndInt(this.canvasSize[this.currentCanvasSize][1] / 2, this.canvasSize[this.currentCanvasSize][1]);
+    
+          // パスデータの作成
+          const pathData = `M ${point1X} ${point1Y} L ${point2X} ${point2Y} L ${point3X} ${point3Y} Z`;
+    
+          const scale = rndInt(10,15);
+          const triangle = new fabric.Path(pathData, {
+            selectable: false,
+            originX: "center",
+            originY: "center",
+            left: this.canvasSize[this.currentCanvasSize][0] / 2,
+            top: this.canvasSize[this.currentCanvasSize][1] / 2,
+            fill: "transparent",
+            stroke: this.markerColors[this.currentMarkerColors][2] + '80',
+            strokeWidth: 2/scale*10,
+            scaleX: scale/10,
+            scaleY: scale/10
+          });
+    
+          return triangle;
+        },
+    
     drawScribble(){
       const times = rndInt(10, 50);
       let pathData = "M"+rndInt(10, this.canvasSize[this.currentCanvasSize][0])+" "+rndInt(10, this.canvasSize[this.currentCanvasSize][1]);
