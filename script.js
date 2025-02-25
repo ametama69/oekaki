@@ -1,4 +1,3 @@
-
 let outputSizeValue=3;
 // 乱数
 function rndInt(min, max) {
@@ -19,7 +18,25 @@ function allDownload() {
           link.click();
       });
     };
-// 出力ログをクリア
+// 一括ダウンロード2
+function allDownload2() {
+      // console.log('Current output size:', outputSizeValue); 
+      const node = document.querySelector('.output-container');
+      const scale = outputSizeValue;
+
+      htmlToImage.toPng(node, { pixelRatio: scale })
+        .then(dataUrl => {
+          const link = document.createElement('a');
+          const now = new Date();
+          const filename = `output_image_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}${now.getMilliseconds().toString().padStart(3, '0')}.png`;
+          link.download = filename;
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch(error => {
+          console.error('Error capturing image:', error);
+        });
+    };
 function clearOutput(){
       const outputContainer = document.querySelector('.output-container');
       outputContainer.innerHTML = ''; // output-container内の要素を全削除

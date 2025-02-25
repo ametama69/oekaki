@@ -18,3 +18,4 @@
 - Fabric.js
 - Phosphor Icons (MIT License)
 - html2canvas (MIT License)
+- html-to-image (MIT License)
