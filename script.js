@@ -84,6 +84,21 @@ const app = Vue.createApp({
     this.canvas.setWidth(this.canvasSize[this.currentCanvasSize][0]);
     this.canvas.setHeight(this.canvasSize[this.currentCanvasSize][1]);
 
+    // URLパラメータの取得と処理
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('size')) {
+      this.currentCanvasSize = urlParams.get('size');
+    }
+    if (urlParams.has('palette')) {
+      this.currentPalette = urlParams.get('palette');
+    }
+    if (urlParams.has('shape')) {
+      this.currentMarkerShapes = urlParams.get('shape');
+    }
+    if (urlParams.has('color')) {
+      this.currentMarkerColors = urlParams.get('color');
+    }
+
 
     this.pencilBrush = new fabric.PencilBrush(this.canvas);
     this.canvas.freeDrawingBrush = this.pencilBrush; 
