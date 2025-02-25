@@ -4,7 +4,7 @@
 
 ## 使い方
 
-詳しい使い方は[こちら](manual.html)をご覧ください。
+詳しい使い方は[こちら](https://ametama69.github.io/oekaki/manual.html)をご覧ください。
 
 ## 機能
 - ランダム図形表示（○△□♡と曲線）
