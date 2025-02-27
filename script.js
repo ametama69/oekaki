@@ -24,19 +24,39 @@ function allDownload2() {
       const node = document.querySelector('.output-container');
       const scale = outputSizeValue;
 
-      htmlToImage.toPng(node, { pixelRatio: scale })
-        .then(dataUrl => {
-          const link = document.createElement('a');
-          const now = new Date();
-          const filename = `output_image_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}${now.getMilliseconds().toString().padStart(3, '0')}.png`;
-          link.download = filename;
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch(error => {
-          console.error('Error capturing image:', error);
-        });
+      addSpacer(node)
+
+      setTimeout(() => {
+        htmlToImage.toPng(node, { pixelRatio: scale })
+          .then(dataUrl => {
+            const link = document.createElement('a');
+            const now = new Date();
+            const filename = `output_image_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}${now.getMilliseconds().toString().padStart(3, '0')}.png`;
+            link.download = filename;
+            link.href = dataUrl;
+            link.click();
+          })
+          .catch(error => {
+            console.error('Error capturing image:', error);
+          });
+      }, 50);
+      removeSpacer(node)
     };
+
+
+function addSpacer(node){
+  const spacer = document.createElement("div");
+  spacer.id = "spacer";
+  spacer.style.width = "100%";
+  spacer.style.height = "1px"; 
+  spacer.style.background = "transparent";
+  node.appendChild(spacer);
+}
+function removeSpacer(node){
+  const spacer = document.getElementById("spacer");
+  if (spacer) spacer.remove();
+}
+
 function clearOutput(){
       const outputContainer = document.querySelector('.output-container');
       outputContainer.innerHTML = ''; // output-container内の要素を全削除
