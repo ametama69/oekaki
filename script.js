@@ -95,6 +95,7 @@ const app = Vue.createApp({
       currentMarkerShapes:"特盛",
       outputSize:5,
       dialogBeforeUnload:true,
+      cropPercentage: 20,
 
       isEraserMode: false,
       isSettingsModalOpen: false,
@@ -103,6 +104,7 @@ const app = Vue.createApp({
       isDrawing: false, 
       lastPointer: null, 
       group: null, 
+      isCropArea: false,
       isDarkMode: false
     }
   },
@@ -255,6 +257,10 @@ const app = Vue.createApp({
         if (newShape) {
           this.group.addWithUpdate(newShape); // グループに追加
         }
+      }
+      
+      if (this.isCropArea){
+          this.group.addWithUpdate(this.drawCropArea()); // グループに追加
       }
       this.canvas.add(this.group); // キャンバスにグループを追加
       this.canvas.bringToFront(this.group); // グループを最前面に移動
@@ -466,6 +472,37 @@ const app = Vue.createApp({
       });
       return scribble;
     },
+    drawCropArea() {
+      const outerWidth = this.canvasSize[this.currentCanvasSize][0];
+      const outerHeight = this.canvasSize[this.currentCanvasSize][1];
+      const innerWidth = outerWidth * (1 - this.cropPercentage / 100);
+      const innerHeight = outerHeight * (1 - this.cropPercentage / 100);
+      
+      // 外側の四角形は時計回り (右上から)
+      // 内側の四角形は反時計回り (左下から) で描画
+      const pathData = `M 0 0 
+                        L ${outerWidth} 0 
+                        L ${outerWidth} ${outerHeight} 
+                        L 0 ${outerHeight} 
+                        Z
+                        M ${(outerWidth-innerWidth)/2} ${(outerHeight+innerHeight)/2}
+                        L ${(outerWidth-innerWidth)/2} ${(outerHeight-innerHeight)/2}
+                        L ${(outerWidth+innerWidth)/2} ${(outerHeight-innerHeight)/2}
+                        L ${(outerWidth+innerWidth)/2} ${(outerHeight+innerHeight)/2}
+                        Z`;
+    
+      const cropArea = new fabric.Path(pathData, {
+        selectable: false,
+        fill: 'rgba(0, 0, 0, 0.2)',
+        stroke: "transparent",
+        strokeWidth: 2,
+        evented: false,
+        fillRule: 'evenodd'
+      });
+    
+      return cropArea;
+    }
+    ,
 
     // キャンバスサイズ変更
     changeCanvasSize(size) {
@@ -524,6 +561,8 @@ const app = Vue.createApp({
         currentMarkerColors: this.currentMarkerColors,
         currentMarkerShapes: this.currentMarkerShapes,
         dialogBeforeUnload: this.dialogBeforeUnload,
+        isCropArea: this.isCropArea,
+        cropPercentage: this.cropPercentage
       };
       localStorage.setItem('drawingAppSettings', JSON.stringify(settings));
     },
@@ -539,6 +578,8 @@ const app = Vue.createApp({
         this.currentMarkerColors = settings.currentMarkerColors;
         this.currentMarkerShapes = settings.currentMarkerShapes;
         this.dialogBeforeUnload = settings.dialogBeforeUnload;
+        this.isCropArea = settings.isCropArea;
+        this.cropPercentage = settings.cropPercentage;
       }
     },
   }

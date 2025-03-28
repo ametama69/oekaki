@@ -120,6 +120,11 @@
             <option value="Dark">Dark</option>
             <option value="Mono">Mono</option>
           </select><br>
+          <label for="cropPercentage">タチキリ割合:</label>
+          <input type="range" id="cropPercentage" v-model="cropPercentage" min="0" max="100" step="1"/>
+          <span>{{ cropPercentage }}</span><br>
+          <label for="isCropArea">断ち落としエリアの表示:</label>
+          <input type="checkbox" id="isCropArea" v-model="isCropArea"><br>
           <label for="outputSize">出力解像度:</label>
           <input type="range" id="outputSize" v-model="outputSize" min="1" max="10" step="1" @input="updateOutputSize()"/>
           <span>{{ outputSize }}</span><br>
