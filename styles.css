@@ -120,7 +120,14 @@ body {
     color: var(--text-color); 
 }
 
-
+#undo-btn:hover, #undo-btn:focus {
+    background-color: #ebd300;
+    color: #fff;
+}
+#clear-btn:hover, #clear-btn:focus {
+    background-color: #ff6b6b; 
+    color: #fff; 
+}
 
 .canvas-container {
     display: flex;

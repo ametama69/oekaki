@@ -60,18 +60,23 @@
       <button class="color-btn" :style="{ backgroundColor: colorPalettes[currentPalette][1] }" @click="brushColor = colorPalettes[currentPalette][1]"></button>
       <button class="color-btn" :style="{ backgroundColor: colorPalettes[currentPalette][2] }" @click="brushColor = colorPalettes[currentPalette][2]"></button>
       <button class="color-btn" :style="{ backgroundColor: colorPalettes[currentPalette][3] }" @click="brushColor = colorPalettes[currentPalette][3]"></button>
-      <br>
+      <br><br>
 
       <button class="tool-btn" id="brush-btn" @click="isEraserMode = false"><i class="ph ph-pen"></i></button>
       <button class="tool-btn" id="eraser-btn" @click="isEraserMode = true"><i class="ph ph-eraser"></i></button>
 
+      <hr>
 
       <!-- <input type="range" name="brush-size" v-model="brushSize" min="1" max="50" orient="vertical" id="inputRange" class="inputRange" @input="updateBrush()"/>
       <p>{{ brushSize }}</p> -->
 
-      <button class="tool-btn" id="undo-btn"><i class="ph ph-arrow-counter-clockwise" @click="clearDraw()"></i></button>
-      <button class="tool-btn" id="clear-btn" @click="clearCanvas()"><i class="ph ph-trash"></i></button>
-      <button class="tool-btn" id="output-btn" @click="outputImage()"><i class="ph ph-check-fat"></i></button>
+      <button class="tool-btn" id="undo-btn"><i class="ph ph-selection-slash" @click="clearDraw()"></i></button>
+      <button class="tool-btn" id="clear-btn" @click="clearCanvas()" @mouseover="$event.target.querySelector('i').classList.replace('ph-trash', 'ph-warning-circle')" @mouseleave="$event.target.querySelector('i').classList.replace('ph-warning-circle', 'ph-trash')"><i class="ph ph-trash"></i></button>        
+      <hr>
+
+      <button class="tool-btn" id="output-btn" @click="outputImage()"><i class="ph ph-file-arrow-down"></i></button>
+ 
+      <hr>
       <button class="tool-btn" id="settings-btn" @click="openSettingsModal()"><i class="ph ph-gear-six"></i></button>
       <button class="tool-btn" id="toggle-mode-btn" @click="toggleDarkMode()"><i class="ph ph-lamp"></i></button>
       <a style="text-decoration: none;" class="tool-btn" id="readme-btn" href="manual.html" target="_blank"><i class="ph ph-question"></i></a>
