@@ -132,7 +132,7 @@ body {
 .canvas-container {
     display: flex;
     justify-content: center;
-    border: #ccc 10px solid;
+    /* border: #ccc 10px solid; */
     align-items: center;     
 }
 
